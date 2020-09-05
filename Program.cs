@@ -7,6 +7,15 @@ namespace guessingGame
     {
         static void Main(string[] args)
         {
+            /*Functionalities to add AFTER THE WORKSHOP:
+             1. Let user know how many guesses it took for the right answer - COMPLETE
+             2. Ask the user what range they would like to guess a number in - COMPLETE
+             3. Create a loop to always start the game over once the right number is guessed. 
+             4. Ask the user what difficult level they would like and give the user a message that they used too many guesses.
+             5. Add an "easter egg" that if the user types in a certain phrase, the user gets a message back. 
+            */
+
+
             bool realInteger = false;
             bool realIntMin = false;
             bool realIntMax = false; 
@@ -20,7 +29,7 @@ namespace guessingGame
             Random rand = new Random();
             int userRangeMin = 0;
             int userRangeMax = 0;
-            int randomNumber = rand.Next(userRangeMin, userRangeMax+1); // allow player to choose the guessing range
+             // allow player to choose the guessing range
             //it will not include that max. So if you want to include 20, make the max 21
             int numberGuesses = 0;
             bool validInput = false;
@@ -30,15 +39,18 @@ namespace guessingGame
             Console.WriteLine("Welcome to the Number Guessing Game!");
 
             //Console.WriteLine(); //this will add a new line
-            //can also use a new line character \n within the quotation marks
+            //can also use a new line character \n within the quotation marks\
 
-            while (correctGuess == false)
+            //change back to default color
+            Console.ForegroundColor = ConsoleColor.White;
+            //prompt user for input
+            //Console.Write("\nPlease Enter a Number Between 1 and 20 ==> ");
+
+
+            while (validInput == false)
             {
-                //change back to default color
                 Console.ForegroundColor = ConsoleColor.White;
-                //prompt user for input
-                //Console.Write("\nPlease Enter a Number Between 1 and 20 ==> ");
-                
+
                 Console.Write("\nPlease choose your number range to guess in by first choosing the smallest number in the range: ");
 
                 string userInputMin = Console.ReadLine();
@@ -52,12 +64,28 @@ namespace guessingGame
                     continue; //this will stop the program from going to the next if statements since data not valid
                     Console.ForegroundColor = ConsoleColor.White;
                 }
+                else
+                {
+                    validInput = true;
 
+                    //testing that we have an correct input for user MAX
+                    //Console.WriteLine(userRangeMin);
+                }
+            }
+
+            validInput = false;
+
+            while (validInput == false)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
 
                 Console.Write("\nPlease choose the largest number in the range: ");
+
                 string userInputMax = Console.ReadLine();
 
                 realIntMax = int.TryParse(userInputMax, out userRangeMax);
+                
+
 
                 if (realIntMax == false)
                 {
@@ -66,69 +94,103 @@ namespace guessingGame
                     continue; //this will stop the program from going to the next if statements since data not valid
                     Console.ForegroundColor = ConsoleColor.White;
                 }
+                else
+                {
+                    validInput = true;
 
+                    //testing that we have an correct input for user MAX
+                    //Console.WriteLine(userRangeMax);
+                }
+            }
 
-                Console.Write("\nPlease Enter a Number Between " + userRangeMin + " and " + userRangeMax +" ==> ");
+            int randomNumber = rand.Next(userRangeMin, userRangeMax + 1);
 
-                //get user input
-                //string userInput = Console.ReadLine();
-                userNumberGuess = Convert.ToInt32(Console.ReadLine());
+            //see if userinput variables still work
 
-                //Readline only takes in a string which is why we aren't setting as an integer
+            //Console.WriteLine("MIN = " + userRangeMin);
+            //Console.WriteLine("MAX = " + userRangeMax);
+            //test that random number generator is working properly:
 
-                /*readline and writeline are their own methods that exist already
-                Console is the class that those methods exist in*/
+            //Console.WriteLine(randomNumber +"\n");
 
-                /*if we want to get the input on the same line, we should use 
-                Console.Write instead of console.writeLine*/
+            //make the loop only include the guessing portion. Take the range setting out
 
-                //Validate user inputs
-                //realInteger
+            while (correctGuess == false)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
 
-                //realInteger = int.TryParse(userInput, out userNumberGuess);
-                /*tryparse is a method to use on strings; you will parse/sift through data 
-                 * to determine if number in data input*/
+                Console.Write("\nPlease Enter a Number Between " + userRangeMin + " and " + userRangeMax + " ==> ");
 
+               // userNumberGuess = Convert.ToInt32(Console.ReadLine());
+
+                string userInput = Console.ReadLine();
+
+                realInteger = int.TryParse(userInput, out userNumberGuess);
+                
                 if (userNumberGuess > userRangeMax || userNumberGuess < userRangeMin || realInteger == false)
                 {
                     Console.ForegroundColor = ConsoleColor.Red; //changes font color...will have to change back after.
-                    Console.WriteLine("\nSorry, the number needs to be a whole number between 1 and 20.\n");
+                    Console.WriteLine("\nSorry, the number needs to be a whole number between " +userRangeMin + " and " + userRangeMax +".\n");
                     continue; //this will stop the program from going to the next if statements since data not valid
-                    Console.ForegroundColor = ConsoleColor.White; 
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
+               
 
-                //Console.WriteLine("User Input ==> " + userInput + "\n");
-
-                //+ is not the only way to concatenate. See below
-                //Console.WriteLine($"Is this a real int? ==> {realInteger}");
-
-                //now to determine how close the user guess is to the random number
-
-                //test that random code is working properly
-                //Console.WriteLine(randomNumber); //debugging remove later
-
-                //is random number greater than users guess
-                //while (userNumberGuess != randomNumber) {
-                    if (randomNumber > userNumberGuess)
-                    {
-                        Console.WriteLine("\nThe Number is Greater than " + userNumberGuess);
-                        numberGuesses = numberGuesses + 1;
-                    }
-                    else if (randomNumber < userNumberGuess)
-                    {
-                        Console.WriteLine("\nThe Number is less than " + userNumberGuess);
-                        numberGuesses = numberGuesses + 1;
-                    }
-                    else
-                    {
-                        numberGuesses = numberGuesses + 1;
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("\nGood Job! The Correct Number is " + randomNumber);
-                        Console.WriteLine("\n It took " + numberGuesses + " guesses to answer correctly!");
-                        correctGuess = true;
-                    //}
+                if (randomNumber > userNumberGuess)
+                {
+                    Console.WriteLine("\nThe Number is Greater than " + userNumberGuess);
+                    numberGuesses = numberGuesses + 1;
                 }
-            }
+                else if (randomNumber < userNumberGuess)
+                {
+                    Console.WriteLine("\nThe Number is less than " + userNumberGuess);
+                    numberGuesses = numberGuesses + 1;
+                }
+                else
+                {
+                    numberGuesses = numberGuesses + 1;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\nGood Job! The Correct Number is " + randomNumber);
+                    Console.WriteLine("\n It took " + numberGuesses + " guesses to answer correctly!");
+                    correctGuess = true;
+
+                }
+                
+            }       
+
+           
+
+            //Readline only takes in a string which is why we aren't setting as an integer
+
+            /*readline and writeline are their own methods that exist already
+            Console is the class that those methods exist in*/
+
+            /*if we want to get the input on the same line, we should use 
+            Console.Write instead of console.writeLine*/
+
+            //Validate user inputs
+            //realInteger
+
+            //realInteger = int.TryParse(userInput, out userNumberGuess);
+            /*tryparse is a method to use on strings; you will parse/sift through data 
+                * to determine if number in data input*/
+
+             
+
+            //Console.WriteLine("User Input ==> " + userInput + "\n");
+
+            //+ is not the only way to concatenate. See below
+            //Console.WriteLine($"Is this a real int? ==> {realInteger}");
+
+            //now to determine how close the user guess is to the random number
+
+            //test that random code is working properly
+            //Console.WriteLine(randomNumber); //debugging remove later
+
+            //is random number greater than users guess
+                
+           
+            
 
 
          
