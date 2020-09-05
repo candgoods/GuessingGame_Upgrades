@@ -1,5 +1,4 @@
-﻿using System; //we need this to do certain things in our code; Console is part of this namespace
-//then we specify the namespace we use "system"
+﻿using System; 
 
 namespace guessingGame
 {
