@@ -14,7 +14,7 @@ namespace guessingGame
 
              3. Create a loop to always start the game over once the right number is guessed. - COMPLETE
 
-             4. Ask the user what difficult level they would like and give the user a message that they used too many guesses. --- FIX OPTION for UNLIMITED GUESSES
+             4. Ask the user what difficult level they would like and give the user a message that they used too many guesses. - COMPLETE
                     Other options (2 guesses, 4 guesses) are COMPLETE
 
              5. Add an "easter egg" that if the user types in a certain phrase, the user gets a message back. 
@@ -116,7 +116,7 @@ namespace guessingGame
                 {
                     Console.ForegroundColor = ConsoleColor.White;
 
-                    Console.Write("\nPlease choose a game difficulty level from the list below: \n\n" +
+                    Console.Write("\nPlease choose a game difficulty level from the list below (enter 1, 2, or 3)\n\n" +
                         "1. Unlimited attempts\n" +
                         "2. 4 attempts\n" +
                         "3. 2 attempts\n\n");
@@ -188,7 +188,11 @@ namespace guessingGame
                         Console.WriteLine("\nThe Number is Greater than " + userNumberGuess);
                         numberGuesses = numberGuesses + 1;
 
-                        if (numberGuesses >= limitOfGuesses)
+                        if (noLimit == true) 
+                        {
+                            limitOfGuesses += 2;    
+                        }
+                        else if (numberGuesses >= limitOfGuesses)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("\nYou've run out of chances. GAME OVER!");
@@ -202,7 +206,11 @@ namespace guessingGame
                         Console.WriteLine("\nThe Number is less than " + userNumberGuess);
                         numberGuesses = numberGuesses + 1;
 
-                        if (numberGuesses >= limitOfGuesses)
+                        if (noLimit == true)
+                        {
+                            limitOfGuesses += 2;
+                        }
+                        else if (numberGuesses >= limitOfGuesses)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("\nYou've run out of chances. GAME OVER!");
