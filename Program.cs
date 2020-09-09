@@ -1,4 +1,5 @@
-﻿using System; 
+﻿using System;
+using System.Text;
 
 namespace guessingGame
 {
@@ -17,7 +18,8 @@ namespace guessingGame
              4. Ask the user what difficult level they would like and give the user a message that they used too many guesses. - COMPLETE
                     Other options (2 guesses, 4 guesses) are COMPLETE
 
-             5. Add an "easter egg" that if the user types in a certain phrase, the user gets a message back. 
+             5. Add an "easter egg" that if the user types in a certain phrase, the user gets a message back. - COMPLETE
+                    Easter egg phrase: level 100 (could be upper or lower case)
 
             */
 
@@ -127,10 +129,19 @@ namespace guessingGame
 
                     if (realIntLvl == false)
                     {
-                        Console.ForegroundColor = ConsoleColor.Red; 
-                        Console.WriteLine("\nSorry, the input needs to be a whole number. \n");
-                        continue; //this will stop the program from going to the next if statements since data not valid
-                        Console.ForegroundColor = ConsoleColor.White;
+                        if (userLevel.ToLower() == "level 100")
+                        {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.WriteLine("\nYOU'RE ALREADY ON ONE HUNNIT!!!");
+                            Console.ForegroundColor = ConsoleColor.White;
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\nSorry, the input needs to be a whole number. \n");
+                            continue; //this will stop the program from going to the next if statements since data not valid
+                            Console.ForegroundColor = ConsoleColor.White;
+                        }
                     }
                     else
                     {
@@ -155,7 +166,7 @@ namespace guessingGame
                 } else if (gameLevel == 1)
                 {
                     noLimit = true;
-                }
+                } 
 
                 //TESTING:
                 //Console.WriteLine("MIN = " + userRangeMin);
